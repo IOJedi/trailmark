@@ -1,0 +1,77 @@
+{
+  "_comment": "Static snapshot of 3rd-party library CVEs used by the Trailmark PoC. Keys are full Java import prefixes.",
+  "org.apache.logging.log4j": [
+    {
+      "cve": "CVE-2021-44228",
+      "severity": "CRITICAL",
+      "cvss": 10.0,
+      "name": "Log4Shell",
+      "affects_versions": "2.0-beta9 to 2.14.1",
+      "fixed_version": "2.17.1",
+      "description": "A JNDI injection vulnerability in log4j-core allows unauthenticated remote code execution when a user-controlled string is logged.",
+      "vulnerable_calls": ["logger.info", "logger.error", "logger.warn", "logger.debug", "logger.fatal", "logger.trace"],
+      "remediation": "Upgrade log4j-core to 2.17.1 or later. If upgrading is not possible, set log4j2.formatMsgNoLookups=true or remove the JndiLookup class from the classpath."
+    },
+    {
+      "cve": "CVE-2021-45046",
+      "severity": "CRITICAL",
+      "cvss": 9.0,
+      "name": "Log4Shell bypass",
+      "affects_versions": "2.0-beta9 to 2.15.0",
+      "fixed_version": "2.17.1",
+      "description": "Incomplete fix for CVE-2021-44228 allows information disclosure and remote code execution via specially crafted lookup strings.",
+      "vulnerable_calls": ["logger.info", "logger.error", "logger.warn", "logger.debug"],
+      "remediation": "Upgrade log4j-core to 2.17.1 or later."
+    }
+  ],
+  "org.apache.commons.text": [
+    {
+      "cve": "CVE-2022-42889",
+      "severity": "CRITICAL",
+      "cvss": 9.8,
+      "name": "Text4Shell",
+      "affects_versions": "commons-text 1.5 to 1.9",
+      "fixed_version": "1.10.0",
+      "description": "Apache Commons Text's StringSubstitutor interpolates script://, dns://, and url:// lookup expressions in user-controlled strings, enabling remote code execution.",
+      "vulnerable_calls": ["StringSubstitutor.replace", "substitutor.replace"],
+      "remediation": "Upgrade commons-text to 1.10.0 or later."
+    }
+  ],
+  "com.fasterxml.jackson": [
+    {
+      "cve": "CVE-2022-42003",
+      "severity": "HIGH",
+      "cvss": 7.5,
+      "name": "Jackson Databind Resource Exhaustion",
+      "affects_versions": "jackson-databind < 2.13.4.2",
+      "fixed_version": "2.13.4.2",
+      "description": "Deep nesting of arrays/objects in WRAP_OBJECT_VALUE_AS_ARRAY deserialization mode can cause stack overflow / denial of service.",
+      "vulnerable_calls": ["objectMapper.readValue", "mapper.readValue"],
+      "remediation": "Upgrade jackson-databind to 2.13.4.2 or later."
+    },
+    {
+      "cve": "CVE-2022-42004",
+      "severity": "HIGH",
+      "cvss": 7.5,
+      "name": "Jackson Databind Resource Exhaustion (2)",
+      "affects_versions": "jackson-databind < 2.13.4.2",
+      "fixed_version": "2.13.4.2",
+      "description": "BeanDeserializer WITH_COERCION_CONFIG can be abused with crafted JSON to cause stack overflow / denial of service.",
+      "vulnerable_calls": ["objectMapper.readValue", "mapper.readValue"],
+      "remediation": "Upgrade jackson-databind to 2.13.4.2 or later."
+    }
+  ],
+  "org.springframework": [
+    {
+      "cve": "CVE-2022-22965",
+      "severity": "CRITICAL",
+      "cvss": 9.8,
+      "name": "Spring4Shell",
+      "affects_versions": "Spring Framework 5.3.0 to 5.3.17, 5.2.0 to 5.2.19",
+      "fixed_version": "5.3.18",
+      "description": "A Spring MVC or Spring WebFlux application running on JDK 9+ may be vulnerable to remote code execution via data binding.",
+      "vulnerable_calls": [],
+      "remediation": "Upgrade to Spring Framework 5.3.18+ or Spring Boot 2.6.6+. Apply WAF rules blocking 'class.*', 'Class.*', '*.class.*', '*.Class.*' parameter patterns."
+    }
+  ]
+}
