@@ -20,21 +20,22 @@ vulnerable library sinks, and diffing a patched version against the original.
 
 ```
 java-vuln-poc/
-  vulnerable-app/       # Spring Boot app with intentionally vulnerable dependencies
-    pom.xml             # Maven config with vulnerable library versions
+  vulnerable-app/           # Spring Boot app with intentionally vulnerable dependencies
+    pom.xml.example         # Maven config showing vulnerable library versions
+                            # (named .example so scanners don't treat it as a real manifest)
     src/main/java/
-      VulnApp.java      # Application entry point
+      VulnApp.java          # Application entry point
       controller/
-        UserController.java   # Spring MVC REST endpoints (HTTP entrypoints)
+        UserController.java # Spring MVC REST endpoints (HTTP entrypoints)
       service/
-        UserService.java      # Jackson deserialization (CVE-2022-42003/42004)
-        ReportService.java    # Commons-Text StringSubstitutor (Text4Shell)
+        UserService.java    # Jackson deserialization (CVE-2022-42003/42004)
+        ReportService.java  # Commons-Text StringSubstitutor (Text4Shell)
       util/
-        LoggingUtil.java      # Log4j logger calls (Log4Shell)
+        LoggingUtil.java    # Log4j logger calls (Log4Shell)
 
-  remediated-app/       # Same app with all dependencies patched
-    pom.xml             # Patched library versions
-    src/main/java/      # Same structure; code-level fixes where applicable
+  remediated-app/           # Same app with all dependencies patched
+    pom.xml.example         # Patched library versions
+    src/main/java/          # Same structure; code-level fixes where applicable
 
   analysis/
     analyze.py          # Trailmark analysis script (the main PoC driver)
@@ -155,6 +156,10 @@ Each vulnerability has a specific fix reflected in `remediated-app/pom.xml`:
 | `commons-text` | 1.9 | **1.10.0** |
 | `jackson-databind` | 2.13.3 | **2.13.4.2** |
 | `spring-boot-starter-parent` | 2.6.3 | **2.6.6** |
+
+> **Note:** Both `pom.xml.example` files are named with the `.example` suffix so that
+> Maven and dependency-advisory scanners do not treat them as real project manifests.
+> They are documentation artefacts only — neither app is meant to be built or deployed.
 
 Code-level changes in the remediated app:
 

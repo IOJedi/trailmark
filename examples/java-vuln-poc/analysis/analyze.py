@@ -510,7 +510,8 @@ def run_analysis(
 
     print(_sep())
     print("  Next steps:")
-    print("  1. Update pom.xml / build.gradle with the patched versions above.")
+    print("  1. Update your pom.xml / build.gradle with the patched versions above.")
+    print("     (See remediated-app/pom.xml.example for the complete patched config.)")
     print("  2. Re-run this script against the patched source tree to confirm")
     print("     call-graph paths to vulnerable sinks are gone.")
     print("  3. Review annotated findings in the graph (engine.findings()) for")
